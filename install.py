@@ -1,12 +1,11 @@
+from config import Config
 from rich.progress import Progress
-import json
 import requests
 import colorama
 import ctypes
 import subprocess
 import shutil
 import sys
-import yaml
 import os
 
 colorama.init()
@@ -17,6 +16,9 @@ CYAN = colorama.Fore.CYAN
 YELLOW = colorama.Fore.YELLOW
 
 DOTFILE_REPO = "https://github.com/Nadim147c/win-dotfiles"
+
+DOT_CONFIG = os.path.expanduser("~/.config")
+
 
 is_admin = ctypes.windll.shell32.IsUserAnAdmin() != 0
 is_debug = "--debug" in sys.argv
@@ -154,39 +156,17 @@ def pip_install(packages: "list[str]"):
 
 
 # Installing packages
-class Packages:
-    def __init__(self, packages: "dict[str, list[str]]") -> None:
-        self.winget = packages["winget"]
-        self.chocolatey = packages["chocolatey"]
-        self.python = packages["python"]
-
-
-class Link:
-    def __init__(self, source: str, destination: str):
-        self.source = source
-        self.destination = destination
-
-
-class Config:
-    def __init__(self):
-        with open("./installer/config.yml", "r") as f:
-            config = yaml.safe_load(f.read())
-        self.packages = Packages(**config)
-        self.links = [Link(**link) for link in config["links"]]
-
-    def __repr__(self) -> str:
-        return json.dumps(self.__dict__, indent=4)
-
 
 pc("Installing git from winget", CYAN)
 
 winget_install(["Git.Git"])
-os.makedirs("~/.config/")
+
+os.makedirs(DOT_CONFIG)
 
 pc("Cloning dot files", CYAN)
-subprocess.run(["git", "clone", DOTFILE_REPO, "~/.config/win-dotfiles"])
+subprocess.run(["git", "clone", DOTFILE_REPO, f"{DOT_CONFIG}/win-dotfiles"])
 
-os.chdir("~/.config/win-dotfiles")
+os.chdir(f"{DOT_CONFIG}/win-dotfiles")
 
 config = Config()
 
@@ -208,10 +188,13 @@ winget_packages = [package for package in config.packages.winget]
 pc(" ".join(winget_packages), GREEN)
 winget_install(winget_packages, False)
 
-os.mkdir("backup")
+os.makedirs("backup", exist_ok=True)
 
 
 def create_symlink(source: str, destination: str):
+    if destination.startswith("~"):
+        destination = os.path.expanduser(destination)
+
     if os.path.exists(destination):
         file_name = source.split("/")[-1]
         shutil.copy(destination, f"backup/{file_name}")

@@ -2,3 +2,4 @@
 .mypy_cache
 .null-ls*
 temp
+backup

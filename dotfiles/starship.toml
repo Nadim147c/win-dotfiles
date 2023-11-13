@@ -5,7 +5,7 @@ add_newline = true
 
 # Change the default prompt format
 format = """\
-[╭╴](238)[ ](bold blue)$env_var\
+[╭╴](238)(bold blue)$shell$env_var$status\
 $all[╰─](238)$character"""
 
 # Change the default prompt characters
@@ -13,12 +13,29 @@ $all[╰─](238)$character"""
 success_symbol = "[󰁔](238)"
 error_symbol = "[󰁔](238)"
 
+[shell]
+fish_indicator = '󰈺 '
+powershell_indicator = '_'
+bash_indicator = " "
+cmd_indicator = " "
+unknown_indicator = 'shell'
+style = 'cyan bold'
+disabled = false
+
+
+[status]
+style = "bold blue"
+success_symbol = ' '
+format = '[$symbol]($style) '
+map_symbol = true
+disabled = false
+
 # Shows the username
 [username]
 format = '[Ephemeral](bold green) '
 style_user = "white bold"
 style_root = "black bold"
-disabled = false  # disable in powershell
+disabled = false  
 show_always = true
 
 [cmd_duration]
@@ -34,8 +51,8 @@ read_only = "  "
 format = "at [$path]($style)[$read_only]($read_only_style) "
 
 [git_branch]
-symbol = " "
-format = "on [$symbol$branch]($style) "
+symbol = "󰊢 󰁕  "
+format = "[$symbol$branch]($style) "
 truncation_length = 4
 truncation_symbol = "…/"
 style = "bold green"
@@ -43,7 +60,7 @@ style = "bold green"
 [git_status]
 format = '[\($all_status$ahead_behind\)]($style) '
 style = "bold green"
-conflicted = "🏳"
+conflicted = " "
 up_to_date = " "
 untracked = " "
 ahead = "⇡${count}"
@@ -54,9 +71,6 @@ modified = " "
 staged = '[++\($count\)](green)'
 renamed = "󰑕 "
 deleted = " "
-
-[terraform]
-format = "via [ terraform $version]($style) 壟 [$workspace]($style) "
 
 [vagrant]
 format = "via [ vagrant $version]($style) "

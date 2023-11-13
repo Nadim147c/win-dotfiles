@@ -17,11 +17,11 @@ packages:
     - qrcode
 
 links:
-  - source: "../dotfiles/starship.toml"
+  - source: "./dotfiles/starship.toml"
     destination: "~/.config/starship.toml"
 
-  - source: "../dotfiles/powershell.ps1"
+  - source: "./dotfiles/powershell.ps1"
     destination: "~/OneDrive/Documents/PowerShell/Microsoft.PowerShell_profile.ps1"
 
-  - source: "../dotfiles/winfetch.ps1"
+  - source: "./dotfiles/winfetch.ps1"
     destination: "~/.config/winfetch/config.ps1"
