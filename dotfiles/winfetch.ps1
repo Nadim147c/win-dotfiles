@@ -1,6 +1,6 @@
 # ===== WINFETCH CONFIGURATION =====
 
-# $image = "~/.config/winfetch/image.png"
+# $image = "~/.config/winfetch/windows-11.png"
 # $noimage = $false
 
 # $ascii = $true

@@ -15,7 +15,7 @@ error_symbol = "[󰁔](238)"
 
 [shell]
 fish_indicator = '󰈺 '
-powershell_indicator = '_'
+powershell_indicator = '󰨊 '
 bash_indicator = " "
 cmd_indicator = " "
 unknown_indicator = 'shell'

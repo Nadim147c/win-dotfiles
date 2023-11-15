@@ -220,6 +220,8 @@ function touch ($path) {
 # Plugins
 
 Import-Module PSReadLine
+Set-PSReadLineOption -PredictionViewStyle ListView
+
 Invoke-Expression (&starship init powershell)
 Invoke-Expression "$(thefuck --alias)"
 
