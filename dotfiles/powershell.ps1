@@ -10,6 +10,7 @@ Set-Alias n pnpm
 Set-Alias f fuck
 
 # function aliase
+function Edit-History { vim (Get-PSReadLineOption).HistorySavePath }
 function s. { Start-Process . }
 function vsc { code . }
 function vimconfig { vim $Home\Appdata\local\nvim\lua\custom }
@@ -243,16 +244,15 @@ if (Test-Path($ChocolateyProfile)) {
     Import-Module "$ChocolateyProfile"
 }
 
-# Clear-Host
-# Printing the name
-# Write-Host @"
-#  _____ ____  _   _ _____ __  __ _____ ____      _    _     
-# | ____|  _ \| | | | ____|  \/  | ____|  _ \    / \  | |    
-# |  _| | |_) | |_| |  _| | |\/| |  _| | |_) |  / _ \ | |    
-# | |___|  __/|  _  | |___| |  | | |___|  _ <  / ___ \| |___ 
-# |_____|_|   |_| |_|_____|_|  |_|_____|_| \_\/_/   \_\_____|
-#
-# "@ -ForegroundColor Green
+Clear-Host
+Write-Host @"
+ _____ ____  _   _ _____ __  __ _____ ____      _    _     
+| ____|  _ \| | | | ____|  \/  | ____|  _ \    / \  | |    
+|  _| | |_) | |_| |  _| | |\/| |  _| | |_) |  / _ \ | |    
+| |___|  __/|  _  | |___| |  | | |___|  _ <  / ___ \| |___ 
+|_____|_|   |_| |_|_____|_|  |_|_____|_| \_\/_/   \_\_____|
+
+"@ -ForegroundColor Green
 
 # winfetch
 

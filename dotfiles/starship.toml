@@ -1,14 +1,12 @@
 # ~/.config/starship.toml
 
-# Inserts a blank line between shell prompts
-add_newline = true
+# add_newline = true
 
-# Change the default prompt format
 format = """\
-[╭╴](238)(bold blue)$shell$env_var$status\
-$all[╰─](238)$character"""
+[╭╴](238)(bold blue)$shell$os$hostname$username$directory
+[| ](238) $all$env_var\
+[╰─](238)$character"""
 
-# Change the default prompt characters
 [character]
 success_symbol = "[󰁔](238)"
 error_symbol = "[󰁔](238)"
@@ -18,21 +16,25 @@ fish_indicator = '󰈺 '
 powershell_indicator = '󰨊 '
 bash_indicator = " "
 cmd_indicator = " "
-unknown_indicator = 'shell'
+unknown_indicator = '$'
 style = 'cyan bold'
 disabled = false
 
-
-[status]
-style = "bold blue"
-success_symbol = ' '
-format = '[$symbol]($style) '
-map_symbol = true
+[os]
 disabled = false
 
-# Shows the username
+[os.symbols]
+Windows = "[ ](#2679FF)"
+Ubuntu = "[󰕈 ](#FF9600)"
+
+[hostname]
+ssh_symbol = "[󰢩 ](yellow)"
+format = '[$ssh_symbol](bold blue)[$hostname](bold red)/'
+ssh_only = false
+disabled = false
+
 [username]
-format = '[Ephemeral](bold green) '
+format = '[$user](bold green) '
 style_user = "white bold"
 style_root = "black bold"
 disabled = false  
