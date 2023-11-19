@@ -1,10 +1,10 @@
 # ~/.config/starship.toml
 
-# add_newline = true
+add_newline = false
 
 format = """\
-[╭╴](238)(bold blue)$shell$os$hostname$username$directory
-[| ](238) $all$env_var\
+[╭─󰁔 ](238)$custom$all$env_var\
+[┠─](238)(bold blue)$shell$os$hostname$username$directory
 [╰─](238)$character"""
 
 [character]
@@ -19,6 +19,7 @@ cmd_indicator = " "
 unknown_indicator = '$'
 style = 'cyan bold'
 disabled = false
+
 
 [os]
 disabled = false
@@ -42,7 +43,7 @@ show_always = true
 
 [cmd_duration]
 min_time = 1_000
-format = 'Took [$duration](bold yellow)'
+format = '  [$duration](bold yellow)'
 
 [directory]
 truncation_length = 3
@@ -53,8 +54,8 @@ read_only = "  "
 format = "at [$path]($style)[$read_only]($read_only_style) "
 
 [git_branch]
-symbol = "󰊢 󰁕  "
-format = "[$symbol$branch]($style) "
+symbol = " "
+format = "[󰊢 Git]($style) 󰁕 [$symbol$branch]($style) "
 truncation_length = 4
 truncation_symbol = "…/"
 style = "bold green"
@@ -75,17 +76,17 @@ renamed = "󰑕 "
 deleted = " "
 
 [vagrant]
-format = "via [ vagrant $version]($style) "
+format = "Env: [ vagrant $version]($style) "
 
 [docker_context]
-format = "via [ $context](bold blue) "
+format = "Env: [ $context](bold blue) "
 
 [python]
-symbol = " "
+format ="Env: [ $version](bold yellow) "
 python_binary = "py"
 
 [nodejs]
-format = "via [󰎙 $version](bold green) "
+format = "Env: [󰎙 $version](bold green) "
 
 [ruby]
-format = "via [ $version]($style) "
+format = "Env: [ $version]($style) "

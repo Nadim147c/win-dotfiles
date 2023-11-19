@@ -151,7 +151,7 @@ function dog ($path) {
         return
     }
     # pip install pygments
-    pygmentize -g -O style=colorful $path
+    pygmentize -g -O style="catppuccin-mocha" $path
 }
 
 function pt ($file, $rarFile, $key) {
