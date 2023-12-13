@@ -6,6 +6,7 @@ packages:
     - Starship.Starship
     - OpenJS.NodeJS.LTS
   chocolatey:
+    - fzf
     - ffmpeg
     - mingw
     - winfetch
