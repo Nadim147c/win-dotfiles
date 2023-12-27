@@ -64,9 +64,12 @@ else:
 
 
 def is_command_exists(cmd: "list[str]") -> bool:
-    pipe = subprocess.PIPE
-    exists = subprocess.run(cmd, text=True, stdout=pipe, stderr=pipe)
-    return True if exists.stdout else False
+	pipe = subprocess.PIPE
+	try: 
+		exists = subprocess.run(cmd, text=True, stdout=pipe, stderr=pipe)
+		return True if exists.stdout else False
+	except:
+		return False
 
 
 # Installing package managers
@@ -161,7 +164,7 @@ pc("Installing git from winget", CYAN)
 
 winget_install(["Git.Git"])
 
-os.makedirs(DOT_CONFIG)
+os.makedirs(DOT_CONFIG, exist_ok=True)
 
 pc("Cloning dot files", CYAN)
 subprocess.run(["git", "clone", DOTFILE_REPO, f"{DOT_CONFIG}/win-dotfiles"])

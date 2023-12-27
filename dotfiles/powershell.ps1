@@ -1,17 +1,18 @@
 Clear-Host
 $env:PYTHONIOENCODING = 'utf-8'
-$ENV:FZF_DEFAULT_OPTS=@"
---color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#a6e3a1
---color=fg:#cdd6f4,header:#a6e3a1,info:#94e2d5,pointer:#f5e0dc
---color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#94e2d5,hl+:#a6e3a1
-"@
+# $ENV:FZF_DEFAULT_OPTS=@"
+# --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#a6e3a1
+# --color=fg:#cdd6f4,header:#a6e3a1,info:#94e2d5,pointer:#f5e0dc
+# --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#94e2d5,hl+:#a6e3a1
+# "@
 
 # Alises 
 Set-Alias vim nvim
 Set-Alias yt yt-dlp
-Set-Alias gdl gallery-dl 
-Set-Alias n pnpm
+Set-Alias gd gallery-dl 
 Set-Alias f fuck
+Set-Alias n pnpm
+Set-Alias pm pm2
 
 # function aliase
 function Edit-History { vim (Get-PSReadLineOption).HistorySavePath }
@@ -20,10 +21,67 @@ function vsc { code . }
 function vimconfig { vim $Home\Appdata\local\nvim\lua\custom }
 function ff { Get-ChildItem | ForEach-Object { $_.Name } | fzf }
 
+# Custom Command 
 
-# Custom Command
 
+function AddStartAndStopTask ($path) {
+    if (-not $path) {
+        $path = Get-Clipboard
+    }
+    echo $path >> $Home\stoplist.txt
+    echo $path >> $Home\startlist.txt
+}
 
+function ShowListedTasks {
+    Write-Host "`nStart list" -ForegroundColor Green
+    Get-Content $Home\startlist.txt
+
+    Write-Host "`nStop list" -ForegroundColor Green
+    Get-Content $Home\stoplist.txt
+}
+
+function StopTasks {
+    $taskList = Get-Content $Home\stoplist.txt | Select-String exe
+
+    foreach ($task in $tasklist) {
+        $path = $task.ToString().Split(",")[0]
+        $taskName = [System.IO.Path]::GetFileName($path)
+        Write-Host "Stopping: $taskName" -ForegroundColor Red
+        taskkill /IM $taskName /F
+    }
+}
+
+function StartTasks {
+    $taskList = Get-Content $Home\startlist.txt | Select-String exe
+
+    foreach ($task in $tasklist) {
+        $path, $argument = $task.ToString().Split(",")
+        Write-Host "Starting: $path" -ForegroundColor Green
+        if ($argument) {
+            Start-Process $path -ArgumentList $argument
+        } else {
+            Start-Process $path
+        }
+    }
+}
+
+function CreateICO ($inputPath, $outputPath) {
+    magick $inputPath -resize 16x16 -depth 32 16.png
+    magick $inputPath -resize 24x24 -depth 32 24.png
+    magick $inputPath -resize 32x32 -depth 32 32.png
+    magick $inputPath -resize 48x48 -depth 32 48.png
+    magick $inputPath -resize 128X128 -depth 32 128.png
+    magick $inputPath -resize 256x256 -depth 32 256.png
+
+    magick 16.png 24.png 32.png 48.png 128.png 256.png $outputPath
+
+    Remove-Item 16.png
+    Remove-Item 24.png
+    Remove-Item 32.png
+    Remove-Item 48.png
+    Remove-Item 128.png
+    Remove-Item 256.png
+}
 
 function ss ([int]$lines = 10) {
     if (-not $MyInvocation.ExpectingInput) {
@@ -176,11 +234,8 @@ function dog ($path) {
         Write-Host "dog [file_path]"
     }
 
-    #pip install catppuccin[pygments] pygments
-    pygmentize -g -O style="catppuccin-mocha" $path
+    pygmentize -g -O style=colorful $path
 }
-
-Set-Alias cat dog
 
 function pt ($file, $rarFile, $key) {
     if (-not ($rarFile -and $file -and $key)) {
@@ -205,7 +260,7 @@ function video {
         [switch]$NoSponserBlock
     )
 
-    $outputPath = "%USERPROFILE%\Downloads\Videos\%(title)s-%(id)s.%(ext)s"
+    $outputPath = "%USERPROFILE%\Downloads\Video\%(title)s-%(id)s.%(ext)s"
 
     $arguments = @(
         "-f", "bv[height<=1080]+ba/b",
@@ -247,7 +302,7 @@ function audio {
         [switch]$YouTubeMusic
     )
 
-    $outputPath = "%USERPROFILE%\Downloads\Audios\%(title)s-%(id)s.%(ext)s"
+    $outputPath = "%USERPROFILE%\Downloads\Audio\%(title)s-%(id)s.%(ext)s"
 
     $arguments = @(
         "--extract-audio",
@@ -383,6 +438,25 @@ function CropVideo {
     Write-Host "ffmpeg -i '$InputPath' -y -vf 'crop=$crop' $OutputPath" -ForegroundColor Cyan
 }
 
+function ConvertToGif  {
+    param(
+        [Parameter(position = 0, Mandatory = $true)]
+        [string]$InputPath,
+        [int]$Loop = 0
+    )
+    $palette = "$(New-Guid).png"
+
+    $videoSize = ffprobe -v error -select_streams "v:0" -show_entries stream="width,height" -of "csv=s=x:p=0" $InputPath
+    $videoWidth = $videoSize.ToString().Split("x")[0]
+
+    $noprint = ffmpeg -i $InputPath -vf palettegen $palette
+
+    $outputPath = "$([System.IO.Path]::GetFileNameWithoutExtension($InputPath)).gif"
+
+    ffmpeg -i $InputPath -i $palette -loop $Loop -filter_complex "fps=10,scale=$($videoWidth):-1[x];[x][1:v]paletteuse" $outputPath
+
+    Remove-Item $palette
+}
 
 # Plugins
 Import-Module PSReadLine
@@ -391,6 +465,8 @@ Set-PSReadLineOption -PredictionViewStyle ListView
 Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+f'
 
 Invoke-Expression (&starship init powershell)
+
+# pip install git+https://github.com/nvbn/thefuck
 Invoke-Expression "$(thefuck --alias)"
 
 # winget completion
@@ -411,7 +487,6 @@ if (Test-Path($ChocolateyProfile)) {
     Import-Module "$ChocolateyProfile"
 }
 
-Clear-Host
 Write-Host @"
  _____ ____  _   _ _____ __  __ _____ ____      _    _     
 | ____|  _ \| | | | ____|  \/  | ____|  _ \    / \  | |    

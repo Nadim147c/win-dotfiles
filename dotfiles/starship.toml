@@ -90,3 +90,6 @@ format = "Env: [󰎙 $version](bold green) "
 
 [ruby]
 format = "Env: [ $version]($style) "
+
+[rust]
+format = "Env: [󱘗 $version]($style) "
