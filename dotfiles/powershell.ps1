@@ -13,6 +13,7 @@ Set-Alias gd gallery-dl
 Set-Alias f fuck
 Set-Alias n pnpm
 Set-Alias pm pm2
+Set-Alias code codium
 
 # function aliase
 function Edit-History {
