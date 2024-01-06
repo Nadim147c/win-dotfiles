@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$ref": "#/definitions/ConfigSchema",
+  "definitions": {
+    "ConfigSchema": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "$schema": {
+          "type": "string"
+        },
+        "packages": {
+          "$ref": "#/definitions/Packages"
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Link"
+          }
+        }
+      },
+      "required": ["$schema", "links", "packages"],
+      "title": "ConfigSchema"
+    },
+    "Link": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "type": "string"
+        },
+        "destination": {
+          "type": "string"
+        }
+      },
+      "required": ["destination", "source"],
+      "title": "Link"
+    },
+    "Packages": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "winget": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "chocolatey": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "pip": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": ["chocolatey", "pip", "winget"],
+      "title": "Packages"
+    }
+  }
+}

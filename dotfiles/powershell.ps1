@@ -38,6 +38,16 @@ function config ([switch]$vsc) {
         vim $profile 
     }
 }
+
+Remove-Alias rm
+function rm ([switch]$rf,[string]$path) {
+    if ($rf) {
+        Remove-Item $path -Recurse -Force
+    } else {
+        Remove-Item $path
+    }
+}
+
 function md5 {
     Get-FileHash -Algorithm MD5 $args 
 }
