@@ -1,10 +1,10 @@
 Clear-Host
 $env:PYTHONIOENCODING = 'utf-8'
-# $ENV:FZF_DEFAULT_OPTS=@"
 # --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#a6e3a1
-# --color=fg:#cdd6f4,header:#a6e3a1,info:#94e2d5,pointer:#f5e0dc
-# --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#94e2d5,hl+:#a6e3a1
-# "@
+$ENV:FZF_DEFAULT_OPTS=@"
+--color=fg:#cdd6f4,header:#a6e3a1,info:#94e2d5,pointer:#f5e0dc
+--color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#94e2d5,hl+:#a6e3a1
+"@
 
 # Alises 
 Set-Alias vim nvim
@@ -15,7 +15,19 @@ Set-Alias n pnpm
 Set-Alias pm pm2
 Set-Alias code codium
 
+
 # function aliase
+
+# List Music
+function lm {
+    Get-ChildItem $args | Where-Object { $_.Name -match "^.*\.(mp3|wav|ogg|flac|m4a|aac|wma)$" }
+}
+
+function song {
+    Write-Host "Running: " -NoNewline
+    Write-Host "spdl --write-lrc --no-subdir --sleep-time 0.5 --output 'D:\Media\Music\' $args" -ForegroundColor Cyan
+    spdl --write-lrc --no-subdir --sleep-time 0.5 --output 'D:\Media\Music\' $args
+}
 function Edit-History {
     vim (Get-PSReadLineOption).HistorySavePath 
 }
@@ -80,7 +92,7 @@ Set-PSReadLineOption -PredictionViewStyle ListView
 Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+f'
 
 Invoke-Expression (&starship init powershell)
-
+Invoke-Expression (& { (zoxide init powershell --cmd cd | Out-String) })
 # pip install git+https://github.com/nvbn/thefuck
 Invoke-Expression "$(thefuck --alias)"
 
@@ -113,3 +125,8 @@ Write-Host @"
 
 # winfetch
 
+
+#34de4b3d-13a8-4540-b76d-b9e8d3851756 PowerToys CommandNotFound module
+
+Import-Module "C:\Users\Ephemeral\AppData\Local\PowerToys\WinUI3Apps\..\WinGetCommandNotFound.psd1"
+#34de4b3d-13a8-4540-b76d-b9e8d3851756
