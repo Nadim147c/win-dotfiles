@@ -89,8 +89,6 @@ function reset {
 Import-Module PSReadLine
 Set-PSReadLineOption -PredictionViewStyle ListView
 
-Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+f'
-
 Invoke-Expression (&starship init powershell)
 Invoke-Expression (& { (zoxide init powershell --cmd cd | Out-String) })
 # pip install git+https://github.com/nvbn/thefuck
@@ -126,7 +124,3 @@ Write-Host @"
 # winfetch
 
 
-#34de4b3d-13a8-4540-b76d-b9e8d3851756 PowerToys CommandNotFound module
-
-Import-Module "C:\Users\Ephemeral\AppData\Local\PowerToys\WinUI3Apps\..\WinGetCommandNotFound.psd1"
-#34de4b3d-13a8-4540-b76d-b9e8d3851756

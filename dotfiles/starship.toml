@@ -3,47 +3,41 @@
 add_newline = true
 
 format = """\
-[╭─󰁔 ](238)$custom$all$env_var\
-[┠─](238)(bold blue)$shell$os$hostname$username$directory
-[╰─](238)$character"""
+[](fg:green)\
+$os\
+[](fg:green bg:red)\
+$shell\
+[](fg:red bg:blue)\
+$directory\
+[](fg:blue bg:yellow)\
+$git_branch\
+$git_status\
+$git_metrics\
+[](yellow)\
+$character\
+"""
 
 [character]
-success_symbol = "[󰁔](238)"
-error_symbol = "[󰁔](238)"
+success_symbol = "[  󰁔](green bold)"
+error_symbol = "[  󰁔](238)"
+
+[os]
+format='[$symbol](bg:#7DF9AA)'
+disabled = false
+
+[os.symbols]
+Windows = "[ ](fg:#2679FF bg:green)"
+Ubuntu = "[󰕈 ](fg:#FF9600 bg:green)"
 
 [shell]
+format = "[ $indicator]($style)"
 fish_indicator = '󰈺 '
 powershell_indicator = '󰨊 '
 bash_indicator = " "
 cmd_indicator = " "
 unknown_indicator = '$'
-style = 'cyan bold'
+style = 'fg:black bg:red'
 disabled = false
-
-
-[os]
-disabled = false
-
-[os.symbols]
-Windows = "[ ](#2679FF)"
-Ubuntu = "[󰕈 ](#FF9600)"
-
-[hostname]
-ssh_symbol = "[󰢩 ](yellow)"
-format = '[$ssh_symbol](bold blue)[$hostname](bold red)/'
-ssh_only = false
-disabled = false
-
-[username]
-format = '[$user](bold green) '
-style_user = "white bold"
-style_root = "black bold"
-disabled = false  
-show_always = true
-
-[cmd_duration]
-min_time = 1_000
-format = '  [$duration](bold yellow)'
 
 [directory]
 truncation_length = 3
@@ -51,45 +45,29 @@ truncation_symbol = "…/"
 home_symbol = " ~"
 read_only_style = "197"
 read_only = "  "
-format = "at [$path]($style)[$read_only]($read_only_style) "
+format = "[ $path]($style)[$read_only]($read_only_style)"
+style = "fg:white bg:blue"
 
 [git_branch]
-symbol = " "
-format = "[󰊢 Git]($style) 󰁕 [$symbol$branch]($style) "
-truncation_length = 4
-truncation_symbol = "…/"
-style = "bold green"
+format = '[ $symbol$branch(:$remote_branch) ]($style)'
+symbol = "  "
+style = "fg:black bg:yellow"
 
 [git_status]
-format = '[\($all_status$ahead_behind\)]($style) '
-style = "bold green"
-conflicted = " "
-up_to_date = " "
-untracked = " "
-ahead = "⇡${count}"
-diverged = "⇕⇡${ahead_count}⇣${behind_count}"
-behind = "⇣${count}"
-stashed = "󰆓 "
-modified = " "
-staged = '[++\($count\)](green)'
-renamed = "󰑕 "
-deleted = " "
+format = '[$all_status]($style)'
+style = "fg:black bg:yellow"
 
-[vagrant]
-format = "Env: [ vagrant $version]($style) "
+[git_metrics]
+format = "([+$added]($added_style))[]($added_style)"
+added_style = "fg:black bg:yellow"
+deleted_style = "fg:bright-red bg:235"
+disabled = false
 
-[docker_context]
-format = "Env: [ $context](bold blue) "
+[hg_branch]
+format = "[ $symbol$branch ]($style)"
+symbol = " "
 
-[python]
-format ="Env: [ $version](bold yellow) "
-python_binary = "py"
+[cmd_duration]
+format = "[  $duration ]($style)"
+style = "fg:bright-white bg:18"
 
-[nodejs]
-format = "Env: [󰎙 $version](bold green) "
-
-[ruby]
-format = "Env: [ $version]($style) "
-
-[rust]
-format = "Env: [󱘗 $version]($style) "
