@@ -13,7 +13,7 @@ $directory\
 $git_branch\
 $git_status\
 $git_metrics\
-[](yellow)\
+[](yellow)\
 $character\
 """
 
@@ -22,12 +22,12 @@ success_symbol = "[  󰁔](green bold)"
 error_symbol = "[  󰁔](238)"
 
 [os]
-format='[$symbol](bg:#7DF9AA)'
+format='[$symbol](fg:black bg:green)'
 disabled = false
 
 [os.symbols]
-Windows = "[ ](fg:#2679FF bg:green)"
-Ubuntu = "[󰕈 ](fg:#FF9600 bg:green)"
+Windows = " "
+Ubuntu = "󰕈 "
 
 [shell]
 format = "[ $indicator]($style)"
@@ -40,17 +40,17 @@ style = 'fg:black bg:red'
 disabled = false
 
 [directory]
+format = "[ $path]($style)[$read_only]($read_only_style)"
+read_only_style = "fg:red bg:blue"
+style = "fg:white bg:blue"
+read_only = "  "
+home_symbol = " ~"
 truncation_length = 3
 truncation_symbol = "…/"
-home_symbol = " ~"
-read_only_style = "197"
-read_only = "  "
-format = "[ $path]($style)[$read_only]($read_only_style)"
-style = "fg:white bg:blue"
 
 [git_branch]
-format = '[ $symbol$branch(:$remote_branch) ]($style)'
-symbol = "  "
+format = '[$symbol$branch(:$remote_branch) ]($style)'
+symbol = "  "
 style = "fg:black bg:yellow"
 
 [git_status]
