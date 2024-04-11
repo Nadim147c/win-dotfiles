@@ -19,7 +19,7 @@ $character\
 
 [character]
 success_symbol = "[  󰁔](green bold)"
-error_symbol = "[  󰁔](238)"
+error_symbol = "[  󰁔](red bold)"
 
 [os]
 format='[$symbol](fg:black bg:green)'
@@ -35,6 +35,7 @@ fish_indicator = '󰈺 '
 powershell_indicator = '󰨊 '
 bash_indicator = " "
 cmd_indicator = " "
+zsh_indicator = "z "
 unknown_indicator = '$'
 style = 'fg:black bg:red'
 disabled = false
