@@ -15,6 +15,7 @@ Set-Alias n pnpm
 Set-Alias pm pm2
 Set-Alias code codium
 
+function gs { git status }
 
 # function aliase
 

@@ -1,44 +1,52 @@
 {
-  "$schema": "./configSchema.json",
-  "packages": {
-    "winget": [
-      "Microsoft.WindowsTerminal",
-      "Microsoft.PowerShell",
-      "ShareX.ShareX",
-      "Starship.Starship",
-      "Python.Python.3.11",
-      "OpenJS.NodeJS.LTS",
-      "ShareX.ShareX",
-      "Discord.Discord"
-    ],
-    "chocolatey": [
-      "fzf",
-      "zoxide",
-      "ffmpeg",
-      "mingw",
-      "winfetch",
-      "neovim",
-      "nerd-fonts-JetBrainsMono"
-    ],
-    "pip": ["yt-dlp", "thefuck", "pygments", "qrcode"]
-  },
-  "links": [
-    {
-      "source": "./dotfiles/starship.toml",
-      "destination": "~/.config/starship.toml"
+    "$schema": "./configSchema.json",
+    "packages": {
+        "winget": [
+            "Microsoft.WindowsTerminal",
+            "Microsoft.PowerShell",
+            "ShareX.ShareX",
+            "Starship.Starship",
+            "Python.Python.3.11",
+            "OpenJS.NodeJS.LTS",
+            "ShareX.ShareX",
+            "Discord.Discord"
+        ],
+        "chocolatey": [
+            "fzf",
+            "zoxide",
+            "ffmpeg",
+            "mingw",
+            "winfetch",
+            "neovim",
+            "nerd-fonts-JetBrainsMono"
+        ],
+        "pip": [
+            "yt-dlp",
+            "thefuck",
+            "pygments",
+            "qrcode"
+        ]
     },
-
-    {
-      "source": "./dotfiles/powershell.ps1",
-      "destination": "~/Documents/PowerShell/Microsoft.PowerShell_profile.ps1"
-    },
-    {
-      "source": "./dotfiles/winfetch.ps1",
-      "destination": "~/.config/winfetch/config.ps1"
-    },
-    {
-      "source": "./dotfiles/ShareXHotkey.json",
-      "destination": "~/Documents/ShareX/HotkeysConfig.json"
-    }
-  ]
+    "links": [
+        {
+            "source": "./dotfiles/starship.toml",
+            "destination": "~/.config/starship.toml"
+        },
+        {
+            "source": "./dotfiles/powershell.ps1",
+            "destination": "~/Documents/PowerShell/Microsoft.PowerShell_profile.ps1"
+        },
+        {
+            "source": "./dotfiles/winfetch.ps1",
+            "destination": "~/.config/winfetch/config.ps1"
+        },
+        {
+            "source": "./dotfiles/ShareXHotkey.json",
+            "destination": "~/Documents/ShareX/HotkeysConfig.json"
+        },
+        {
+            "source": "./dotfiles/winget.json",
+            "destination": "~/AppData/Local/Packages/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe/LocalState/settings.json"
+        }
+    ]
 }
