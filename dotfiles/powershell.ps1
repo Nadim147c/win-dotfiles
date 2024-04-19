@@ -15,7 +15,9 @@ Set-Alias n pnpm
 Set-Alias pm pm2
 Set-Alias code codium
 
-function gs { git status }
+function gs {
+    git status 
+}
 
 # function aliase
 
@@ -89,6 +91,8 @@ function reset {
 # Plugins
 Import-Module PSReadLine
 Set-PSReadLineOption -PredictionViewStyle ListView
+Set-PSReadLineKeyHandler -Key "Ctrl+n" -Function NextHistory
+Set-PSReadLineKeyHandler -Key "Ctrl+p" -Function PreviousHistory
 
 Invoke-Expression (&starship init powershell)
 Invoke-Expression (& { (zoxide init powershell --cmd cd | Out-String) })
