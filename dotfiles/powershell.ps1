@@ -27,10 +27,12 @@ function lm {
 }
 
 function song {
+    $cmd = "spdl --write-lrc --no-subdir --sleep-time 0.5 --output 'D:\Media\Music\' $args" 
     Write-Host "Running: " -NoNewline
-    Write-Host "spdl --write-lrc --no-subdir --sleep-time 0.5 --output 'D:\Media\Music\' $args" -ForegroundColor Cyan
-    spdl --write-lrc --no-subdir --sleep-time 0.5 --output 'D:\Media\Music\' $args
+    Write-Host $cmd -ForegroundColor Cyan
+    Invoke-Expression $cmd
 }
+
 function Edit-History {
     vim (Get-PSReadLineOption).HistorySavePath 
 }
