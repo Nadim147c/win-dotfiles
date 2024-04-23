@@ -27,7 +27,7 @@ function lm {
 }
 
 function song {
-    $cmd = "spdl --write-lrc --no-subdir --sleep-time 0.5 --output 'D:\Media\Music\' $args" 
+    $cmd = "spdl --write-lrc --sleep-time 0.5 --output 'D:\Music\' $args" 
     Write-Host "Running: " -NoNewline
     Write-Host $cmd -ForegroundColor Cyan
     Invoke-Expression $cmd
@@ -129,5 +129,3 @@ Write-Host @"
 "@ -ForegroundColor Green
 
 # winfetch
-
-

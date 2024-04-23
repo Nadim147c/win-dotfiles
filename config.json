@@ -20,12 +20,7 @@
             "neovim",
             "nerd-fonts-JetBrainsMono"
         ],
-        "pip": [
-            "yt-dlp",
-            "thefuck",
-            "pygments",
-            "qrcode"
-        ]
+        "pip": ["yt-dlp", "thefuck", "pygments", "qrcode"]
     },
     "links": [
         {
@@ -47,6 +42,10 @@
         {
             "source": "./dotfiles/winget.json",
             "destination": "~/AppData/Local/Packages/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe/LocalState/settings.json"
+        },
+        {
+            "source": "./dotfiles/windows-terminal.json",
+            "destination": "~/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json"
         }
     ]
 }
