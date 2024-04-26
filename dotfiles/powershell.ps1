@@ -15,11 +15,11 @@ Set-Alias n pnpm
 Set-Alias pm pm2
 Set-Alias code codium
 
+# function aliase
 function gs {
     git status 
 }
 
-# function aliase
 
 # List Music
 function lm {
