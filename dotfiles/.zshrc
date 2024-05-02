@@ -61,7 +61,8 @@ alias rmtor='~/tools/remove-transmission-torrent.sh'
 alias lstor='transmission-remote $(cat ~/tools/transmission.token) --list'
 
 alias tma='tmux a -t $(tmux ls | fzf | awk -F: '\''{print $1}'\'')'
-alias tma='tmux kill-session -t $(tmux ls | fzf | awk -F: '\''{print $1}'\'')'
+alias tmr='tmux kill-session -t $(tmux ls | fzf | awk -F: '\''{print $1}'\'')'
+alias tmn='tmux new -s'
 
 alias vim=nvim
 alias n=pnpm
