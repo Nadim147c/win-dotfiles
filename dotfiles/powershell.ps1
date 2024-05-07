@@ -102,7 +102,6 @@ Invoke-Expression (& { (zoxide init powershell --cmd cd | Out-String) })
 Invoke-Expression "$(thefuck --alias)"
 
 # winget completion
-
 Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
     param($wordToComplete, $commandAst, $cursorPosition)
     [Console]::InputEncoding = [Console]::OutputEncoding = $OutputEncoding = [System.Text.Utf8Encoding]::new()
@@ -129,3 +128,6 @@ Write-Host @"
 "@ -ForegroundColor Green
 
 # winfetch
+
+Import-Module "C:\Users\Ephemeral\AppData\Local\PowerToys\WinUI3Apps\..\WinGetCommandNotFound.psd1"
+#34de4b3d-13a8-4540-b76d-b9e8d3851756
