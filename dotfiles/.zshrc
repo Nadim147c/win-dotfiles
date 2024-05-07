@@ -54,7 +54,7 @@ alias vimconfig="nvim ~/.config/nvim/lua/custom/"
 
 alias fix-mod-ig-idk='sudo chmod -R 777 /media/media/movie && sudo chmod -R 777 /media/media/show'
 
-alias song='spdl --write-lrc --sleep-time 0.5 --no-subdir --output /media/media/music/'
+alias song='spdl --write-lrc --write-m3u --sleep-time 0.5 --no-subdir --output /media/media/music/'
 
 #transmission client
 alias rmtor='~/tools/remove-transmission-torrent.sh'
@@ -74,11 +74,13 @@ alias yt=yt-dlp
 #Git 
 alias gs="git status"
 
-alias video="yt-dlp -f 'bv[height<=1080]+ba/b' --merge-output-format mp4 --add-metadata --embed-chapters --list-formats --no-simulate --sponsorblock-remove all"
+alias video="yt-dlp -f 'bv*[height<=1080]+ba/b' --merge-output-format mp4 --add-metadata --embed-chapters --list-formats --no-simulate --sponsorblock-remove all"
+alias video720="yt-dlp -f 'bv*[height<=720]+ba/b' --merge-output-format mp4 --add-metadata --embed-chapters --list-formats --no-simulate --sponsorblock-remove all"
 
 alias hh="cat ~/.zsh_history | fzf | awk -F';' '{print \$2}' | bash"
 
-echo -e '\033[0;32m _____ ____  _   _ _____ __  __ _____ ____      _    _     
+echo -e '
+\033[0;32m _____ ____  _   _ _____ __  __ _____ ____      _    _     
 | ____|  _ \| | | | ____|  \/  | ____|  _ \    / \  | |    
 |  _| | |_) | |_| |  _| | |\/| |  _| | |_) |  / _ \ | |    
 | |___|  __/|  _  | |___| |  | | |___|  _ <  / ___ \| |___ 
