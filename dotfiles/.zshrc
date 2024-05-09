@@ -91,3 +91,4 @@ eval "$(starship init zsh)"
 eval "$(zoxide init zsh --cmd cd)"
 
 
+export PATH=$PATH:/usr/local/go/bin
