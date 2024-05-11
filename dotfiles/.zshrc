@@ -1,14 +1,3 @@
-dttc () {
-    local filename="$1"
-    extension=$(echo "$filename" | grep -o '\.[^.]*$')
-    filename_no_ext=$(echo "$filename" | sed 's/\.[^.]*$//' | sed 's/\./ /g' | awk '{ for(i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) tolower(substr($i,2)); }1' | tr ' ' '\n' | tr '\n' ' ' | sed 's/ $//')
-
-    echo "From:$1"
-    echo "To:$filename_no_ext$extension"
-
-    mv $1 "$filename_no_ext$extension"
-} 
-
 apt() { 
     if [[ "$1" == "install" || "$1" == "update" || "$1" == "upgrade" ]]; then
         command sudo nala "$@"
@@ -33,24 +22,22 @@ export NVM_DIR="$HOME/.nvm"
 
 export PATH="$PATH:/home/ephemeral/.local/bin"
 
+export FZF_DEFAULT_OPTS='
+--color=fg:#cdd6f4,header:#a6e3a1,info:#94e2d5,pointer:#f5e0dc
+--color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#94e2d5,hl+:#a6e3a1
+--info inline-right --layout reverse
+'
+
 plugins=(
     zsh-autosuggestions
 )
 
 source $ZSH/oh-my-zsh.sh
 
-## My aliases
-alias ni="sudo nala install"
-alias ud="sudo nala update"
-alias ug="sudo nala upgrade"
-
-alias dog='pygmentize -g -O style=colorful'
-
-alias reload="clear && source ~/.zshrc"
-alias config="nvim ~/.zshrc"
-alias stdn="sudo shutdown now"
-alias eh="nvim ~/.zsh_history"
-alias vimconfig="nvim ~/.config/nvim/lua/custom/"
+alias reload='clear && source ~/.zshrc'
+alias config='nvim ~/.zshrc'
+alias stdn='sudo shutdown now'
+alias eh='nvim ~/.zsh_history'
 
 alias fix-mod-ig-idk='sudo chmod -R 777 /media/media/movie && sudo chmod -R 777 /media/media/show'
 
@@ -72,12 +59,13 @@ alias yts=ytdl-sub
 alias yt=yt-dlp
 
 #Git 
-alias gs="git status"
+alias gs='git status'
+alias gi='git status | rg '\''\w+: *.+'\'' | fzf --delimiter ':' --preview '\''git diff --color=always {2}'\''
 
-alias video="yt-dlp -f 'bv*[height<=1080]+ba/b' --merge-output-format mp4 --add-metadata --embed-chapters --list-formats --no-simulate --sponsorblock-remove all"
+alias video='yt-dlp -f '\''bv*[height<=1080]+ba/b'\'' --merge-output-format mp4 --add-metadata --embed-chapters --list-formats --no-simulate --sponsorblock-remove all'
 alias video720="yt-dlp -f 'bv*[height<=720]+ba/b' --merge-output-format mp4 --add-metadata --embed-chapters --list-formats --no-simulate --sponsorblock-remove all"
 
-alias hh="cat ~/.zsh_history | fzf | awk -F';' '{print \$2}' | bash"
+alias hh='cat ~/.zsh_history | fzf | awk -F ; '\''{print \$2}'\'' | bash'
 
 echo -e '
 \033[0;32m _____ ____  _   _ _____ __  __ _____ ____      _    _     
@@ -91,4 +79,3 @@ eval "$(starship init zsh)"
 eval "$(zoxide init zsh --cmd cd)"
 
 
-export PATH=$PATH:/usr/local/go/bin
