@@ -24,6 +24,7 @@ disabled = false
 [os.symbols]
 Windows = "[ ](#00C6FF)"
 Ubuntu = "[󰕈 ](#FF7800)"
+Arch = "[󰣇 ](#00C6FF)"
 
 [shell]
 format = "$indicator"
@@ -64,4 +65,3 @@ disabled = false
 [hg_branch]
 format = "[ $symbol$branch ]($style)"
 symbol = " "
-
