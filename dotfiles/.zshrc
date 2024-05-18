@@ -22,7 +22,6 @@ zinit light Aloxaf/fzf-tab
 # Add in snippets
 zinit snippet OMZP::sudo
 zinit snippet OMZP::nvm
-zinit snippet OMZP::common-aliases
 zinit snippet OMZP::colored-man-pages
 zinit snippet OMZP::command-not-found
 
