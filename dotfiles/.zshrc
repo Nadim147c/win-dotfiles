@@ -4,14 +4,13 @@ if [ ! -d "$ZINIT_HOME" ]; then
    mkdir -p "$(dirname $ZINIT_HOME)"
    git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 fi
+# Source/Load zinit
+source "${ZINIT_HOME}/zinit.zsh"
 
 # Load custom shell command 
 if [ -f "$HOME/.zsh_cmd" ]; then
     source "$HOME/.zsh_cmd" 
 fi
-
-# Source/Load zinit
-source "${ZINIT_HOME}/zinit.zsh"
 
 # Add in zsh plugins
 zinit light zsh-users/zsh-syntax-highlighting
@@ -65,9 +64,9 @@ bindkey '^[[1;5D' backward-word
 export FZF_DEFAULT_OPTS='
 --color=fg:#cdd6f4,header:#a6e3a1,info:#94e2d5,pointer:#f5e0dc
 --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#94e2d5,hl+:#a6e3a1
---info inline-right --layout reverse
+--info inline-right --layout reverse --border
 '
-export PATH="$PATH:/home/ephemeral/.local/bin"
+export PATH="$PATH:/home/ephemeral/.local/bin:/usr/local/go/bin"
 
 # alias
 alias reload='clear && source ~/.zshrc'
@@ -114,5 +113,6 @@ echo -e '\033[0;32m
 eval "$(starship init zsh)"
 eval "$(thefuck --alias)"
 eval "$(zoxide init zsh --cmd cd)"
+source <(fzf --zsh)
 
-eval $(thefuck --alias)
+
