@@ -1,16 +1,24 @@
 # Download Zinit, if it's not there yet
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 if [ ! -d "$ZINIT_HOME" ]; then
-   mkdir -p "$(dirname $ZINIT_HOME)"
+   mkdir -p "$(dirname "$ZINIT_HOME")"
    git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 fi
 # Source/Load zinit
-source "${ZINIT_HOME}/zinit.zsh"
+source "$ZINIT_HOME/zinit.zsh"
 
 # Load custom shell command 
 if [ -f "$HOME/.zsh_cmd" ]; then
     source "$HOME/.zsh_cmd" 
 fi
+
+# Exports 
+export FZF_DEFAULT_OPTS='
+--color=fg:#cdd6f4,header:#a6e3a1,info:#94e2d5,pointer:#f5e0dc
+--color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#94e2d5,hl+:#a6e3a1
+--info inline-right --layout reverse --border
+'
+export PATH="$PATH:/home/ephemeral/.local/bin:/usr/local/go/bin"
 
 # Add in zsh plugins
 zinit light zsh-users/zsh-syntax-highlighting
@@ -21,6 +29,7 @@ zinit light Aloxaf/fzf-tab
 # Add in snippets
 zinit snippet OMZP::sudo
 zinit snippet OMZP::nvm
+zinit snippet OMZP::thefuck
 zinit snippet OMZP::colored-man-pages
 zinit snippet OMZP::command-not-found
 
@@ -32,10 +41,10 @@ autoload -Uz compinit && compinit
 zinit cdreplay -q
 
 # History
-HISTSIZE=5000
-HISTFILE=~/.zsh_history
-SAVEHIST=$HISTSIZE
-HISTDUP=erase
+export HISTSIZE=5000
+export HISTFILE=~/.zsh_history
+export SAVEHIST=$HISTSIZE
+export HISTDUP=erase
 setopt appendhistory
 setopt sharehistory
 setopt hist_ignore_space
@@ -48,8 +57,8 @@ setopt hist_find_no_dups
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu no
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color=always $realpath'
-zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza --color=always $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'eza --color $realpath'
 
 # Custom binding
 bindkey -e
@@ -60,23 +69,16 @@ bindkey '^H' backward-kill-word
 bindkey '^[[1;5C' forward-word
 bindkey '^[[1;5D' backward-word
 
-# Exports 
-export FZF_DEFAULT_OPTS='
---color=fg:#cdd6f4,header:#a6e3a1,info:#94e2d5,pointer:#f5e0dc
---color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#94e2d5,hl+:#a6e3a1
---info inline-right --layout reverse --border
-'
-export PATH="$PATH:/home/ephemeral/.local/bin:/usr/local/go/bin"
-
 # alias
 alias reload='clear && source ~/.zshrc'
 alias config='nvim ~/.zshrc'
 alias stdn='sudo shutdown now'
 
+# RUST_WRAPPER=sccache cargo install eza
 # LS alias
-alias ls='ls --color=always'
-alias la='ls --color=always -ian'
-alias l='ls --color=always -in'
+alias ls='eza --color=always --icons'
+alias l='eza --color=always --icons -ial'
+alias la='eza --color=always --icons -ia'
 
 # SPDL
 alias song='spdl --write-lrc --write-m3u --sleep-time 0.5 --no-subdir --output /media/media/music/'
@@ -85,22 +87,26 @@ alias song='spdl --write-lrc --write-m3u --sleep-time 0.5 --no-subdir --output /
 alias rmtor='~/tools/remove-transmission-torrent.sh'
 alias lstor='transmission-remote $(cat ~/tools/transmission.token) --list'
 
-alias tma='tmux a -t $(tmux ls | fzf | awk -F: '\''{print $1}'\'')'
-alias tmr='tmux kill-session -t $(tmux ls | fzf | awk -F: '\''{print $1}'\'')'
-alias tmn='tmux new -s'
+# Zellij
+alias za='zellij a $(zellij ls | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2};?)?)?[mGK]//g" | rg -v EXITED | fzf | awk '\''{print $1}'\'')'
+alias zr='zellij kill-session $(zellij ls | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2};?)?)?[mGK]//g" | fzf | awk '\''{print $1}'\'')'
+alias zda='zellij delete-all-sessions'
+zn() { 
+    if [ -n "$1" ];then
+        zellij -s "$1" 
+    else 
+        echo 'Please pass session name as an argument' 
+    fi
+}
+
 
 alias vim=nvim
 alias n=pnpm
 alias pm=pm2
 alias yt=yt-dlp
 
-#Git 
-alias gs='git status'
-
 # yt-dlp alias
 alias video='yt-dlp -f '\''bv*[height<=1080]+ba/b'\'' --merge-output-format mp4 --add-metadata --embed-chapters --list-formats --no-simulate --sponsorblock-remove all'
-
-alias hh='cat ~/.zsh_history | fzf | awk -F ; '\''{print \$2}'\'' | bash'
 
 echo -e '\033[0;32m
  _____ ____  _   _ _____ __  __ _____ ____      _    _     
@@ -111,8 +117,6 @@ echo -e '\033[0;32m
 '
 
 eval "$(starship init zsh)"
-eval "$(thefuck --alias)"
+eval "$(thefuck --alias f)"
 eval "$(zoxide init zsh --cmd cd)"
 source <(fzf --zsh)
-
-
