@@ -94,7 +94,7 @@
         "defaults": 
         {
             "backgroundImage": "desktopWallpaper",
-            "backgroundImageOpacity": 0.19,
+            "backgroundImageOpacity": 0.09,
             "colorScheme": "Catppuccin Mocha",
             "font": 
             {

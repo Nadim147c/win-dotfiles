@@ -1,11 +1,12 @@
 Clear-Host
-$env:PYTHONIOENCODING = 'utf-8'
+$ENV:PYTHONIOENCODING = 'utf-8'
 # --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#a6e3a1
 $ENV:FZF_DEFAULT_OPTS=@"
 --color=fg:#cdd6f4,header:#a6e3a1,info:#94e2d5,pointer:#f5e0dc
 --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#94e2d5,hl+:#a6e3a1
 --info inline-right --layout reverse
 "@
+$ENV:MPV_CONFIG_DIR="$HOME/.config/mpv"
 
 # Alises 
 Set-Alias vim nvim
